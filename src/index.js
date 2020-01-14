@@ -1,7 +1,8 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { has, union } from 'lodash';
 import fs from 'fs';
-import path from 'path';
 
 export default (pathToFile1, pathToFile2) => {
   const file1 = fs.readFileSync(pathToFile1, 'utf-8');
@@ -15,7 +16,7 @@ export default (pathToFile1, pathToFile2) => {
 
   const unionKeys = union(keysFile1, keysFile2);
 
-  const difference = unionKeys.map(el => {
+  const difference = unionKeys.map((el) => {
     if (has(parseFile1, el) && has(parseFile2, el)) {
       if (parseFile1[el] === parseFile2[el]) {
         return ` ${el}: ${parseFile1[el]}`;
@@ -30,7 +31,6 @@ export default (pathToFile1, pathToFile2) => {
     if (has(parseFile1, el) && !has(parseFile2, el)) {
       return ` - ${el}: ${parseFile1[el]}`;
     }
-
   });
   return ['{', ...difference, '}'].join('\n');
 };
