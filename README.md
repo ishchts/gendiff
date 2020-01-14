@@ -5,3 +5,6 @@
 # Travis CI
 
 [![Build Status](https://travis-ci.com/Il1ya1/backend-project-lvl2.svg?branch=master)](https://travis-ci.com/Il1ya1/backend-project-lvl2)
+
+# Asciinema
+[asciinema](https://asciinema.org/a/ovoikYe0Q4RxwHWau0jkTPyZk)
