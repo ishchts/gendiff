@@ -1,8 +1,12 @@
 /* eslint-disable no-undef */
+import path from 'path';
+import genDiff from '../src/index';
+import fs from 'fs';
 
 test('flat json comparisons', () => {
-  const data = { one: 1 };
-  data.two = 2;
+  const beforeFile = path.join(`${__dirname}`, '../', '__fixtures__/before.json');
+  const afterFIle = path.join(`${__dirname}`, '../', '__fixtures__/after.json');
+  const expected = fs.readFileSync(path.join(`${__dirname}`, '../', '__fixtures__/diffFlat'), 'utf-8');
 
-  expect(data).toEqual({ one: 1, two: 2 });
+  expect(genDiff(beforeFile, afterFIle)).toEqual(expected);
 });
