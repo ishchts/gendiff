@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import path from 'path';
-import genDiff from '../src/index';
 import fs from 'fs';
+import genDiff from '../src/index';
 
 test('flat yaml comparisons', () => {
   const beforeFile = path.join(`${__dirname}`, '../', '__fixtures__/before.yml');
