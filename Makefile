@@ -15,3 +15,6 @@ publish:
 
 test:
 	npm run test 
+
+test-covegare:
+	npx jest --coverage
