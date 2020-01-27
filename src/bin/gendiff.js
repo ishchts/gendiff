@@ -11,6 +11,11 @@ program
     if (cmd.format) {
       console.log(cmd.format);
     }
+
+    if (env.length > 2 || env.length < 2) {
+      console.log('there should be two files');
+    }
+
     console.log(genDiff(...env));
   });
 
