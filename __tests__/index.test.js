@@ -3,18 +3,28 @@ import path from 'path';
 import fs from 'fs';
 import genDiff from '../src/index';
 
-test('flat yaml comparisons', () => {
-  const beforeFile = path.join(`${__dirname}`, '../', '__fixtures__/before.yml');
-  const afterFIle = path.join(`${__dirname}`, '../', '__fixtures__/after.yml');
-  const expected = fs.readFileSync(path.join(`${__dirname}`, '../', '__fixtures__/diffFlat'), 'utf-8');
+const fixturesDir = path.resolve('__tests__/__fixtures__/');
 
-  expect(genDiff(beforeFile, afterFIle)).toEqual(expected);
-});
+describe('Comparison of flat files', () => {
+  const before = path.resolve(fixturesDir, 'before.json');
+  const after = path.resolve(fixturesDir, 'after.json');
 
-test('flat json comparisons', () => {
-  const beforeFile = path.join(`${__dirname}`, '../', '__fixtures__/before.json');
-  const afterFIle = path.join(`${__dirname}`, '../', '__fixtures__/after.json');
-  const expected = fs.readFileSync(path.join(`${__dirname}`, '../', '__fixtures__/diffFlat'), 'utf-8');
+  const beforeYml = path.resolve(fixturesDir, 'before.yml');
+  const afterYml = path.resolve(fixturesDir, 'after.yml');
 
-  expect(genDiff(beforeFile, afterFIle)).toEqual(expected);
+  const beforeIni = path.resolve(fixturesDir, 'before.ini');
+  const afterIni = path.resolve(fixturesDir, 'after.ini');
+  const result = fs.readFileSync(path.resolve(fixturesDir, 'diffFlat'), 'utf-8');
+
+  test('qwe', () => {
+    expect(genDiff(before, after, 'json')).toBe(expected);
+  });
+
+  /*
+  test.each([
+    [before, after, result],
+  ])('.file(%j, %j)', (a, b, expected) => {
+    expect(genDiff(a, b)).toBe(expected);
+  });
+  */
 });

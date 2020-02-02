@@ -3,21 +3,13 @@ import program from 'commander';
 import { version, description } from '../../package.json';
 import genDiff from '..';
 
-
 program
+  .arguments('<firstConfig> <secondConfig>')
   .version(version)
   .description(description)
-  .option('-f, --format [type]', 'Output format')
-  .action((cmd, env) => {
-    if (cmd.format) {
-      console.log(cmd.format);
-    }
-
-    if (env.length > 2 || env.length < 2) {
-      console.log('there should be two files');
-    }
-
-    console.log(genDiff(...env));
+  .option('-f, --format [type]', 'Output format', 'json')
+  .action((firstConfig, secondConfig) => {
+    console.log(genDiff(firstConfig, secondConfig, program.format));
   });
 
 program.parse(process.argv);
