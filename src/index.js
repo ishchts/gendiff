@@ -7,8 +7,86 @@ import path from 'path';
 import parsers from './parsers';
 
 const readFile = (filePath) => (
-  fs.readFileSync(filePath, 'utf-8')
+  fs.readFileSync(path.resolve(filePath), 'utf-8')
 );
+
+const types = {
+  unchanged: 'unchanged',
+  added: 'added',
+  changed: 'changed',
+  removed: 'removed',
+};
+
+const node = ({ name, beforeValue = null, afterValue = null, type, children }) => {
+  return {
+    name,
+    type,
+    beforeValue,
+    afterValue,
+    children,
+  };
+};
+
+const ast = (file1, file2) => {
+  const keysFile1 = Object.keys(file1);
+  const keysFile2 = Object.keys(file2);
+
+  const unionKeys = union(keysFile1, keysFile2);
+
+  return unionKeys.map(el => {
+    const beforeValue = file1[el];
+    const afterValue = file2[el];
+
+    if (beforeValue instanceof Object && afterValue instanceof Object) {
+      return ast(beforeValue, afterValue);
+    }
+    if (has(file1, el) && has(file2, el)) {
+      if (beforeValue === afterValue) {
+        return node({ name: el, beforeValue, afterValue, type: 'unchanged', children: [] });
+      }
+
+      if (beforeValue !== afterValue) {
+        return node({ name: el, beforeValue, afterValue, type: 'changed', children: [] });
+      }
+    }
+
+    if (!has(file1, el) && has(file2, el)) {
+      return node({ name: el, afterValue, type: 'added', children: [] });
+    }
+
+    if (has(file1, el) && !has(file2, el)) {
+      return node({ name: el, beforeValue, type: 'removed', children: [] });
+    }
+  });
+};
+
+const renderAst = (nodes) => {
+
+  return nodes.map(node => {
+    if (node instanceof Array) {
+      return renderAst(node);
+    }
+
+    const { type, name, beforeValue, afterValue } = node;
+    if (type === 'unchanged') {
+      return `    ${name}: ${beforeValue}`;
+    };
+
+    if (type === 'changed') {
+      return [`  + ${name}: ${afterValue}`, `  - ${name}: ${beforeValue}`].join('\n');
+    }
+
+    if (type === 'added') {
+      return `  + ${name}: ${afterValue}`;
+    }
+
+    if (type === 'removed') {
+      return `  - ${name}: ${beforeValue}`;
+    }
+
+    return '123'
+  });
+};
 
 export default (pathToFile1, pathToFile2) => {
   const formatFile1 = path.extname(pathToFile1);
@@ -17,29 +95,10 @@ export default (pathToFile1, pathToFile2) => {
   const file1 = parsers(formatFile1, readFile(pathToFile1));
   const file2 = parsers(formatFile2, readFile(pathToFile2));
 
-  const keysFile1 = Object.keys(file1);
-  const keysFile2 = Object.keys(file2);
+  const buildAst = ast(file1, file2);
+  console.log('buildAst 222');
+  console.log(buildAst);
+  return null;
 
-  const unionKeys = union(keysFile1, keysFile2);
-  const diff = unionKeys.map((el) => {
-    if (has(file1, el) && has(file2, el)) {
-      if (file1[el] === file2[el]) {
-        return `  ${el}: ${file1[el]}`;
-      }
-
-      if (file1[el] !== file2[el]) {
-        return [`  + ${el}: ${file2[el]}`, `  - ${el}: ${file1[el]}`].join('\n');
-      }
-    }
-
-    if (!has(file1, el) && has(file2, el)) {
-      return `  + ${el}: ${file2[el]}`;
-    }
-
-    if (has(file1, el) && !has(file2, el)) {
-      return `  - ${el}: ${file1[el]}`;
-    }
-  });
-
-  return ['{', ...diff, '}'].join('\n');
+  return ['{', ...renderAst(buildAst), '}'].join('\n');
 };

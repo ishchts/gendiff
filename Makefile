@@ -18,3 +18,6 @@ test:
 
 test-covegare:
 	npx jest --coverage
+
+test-watch:
+	npm test -- --watch

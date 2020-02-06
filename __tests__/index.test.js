@@ -17,7 +17,7 @@ describe('Comparison of flat files', () => {
   const result = fs.readFileSync(path.resolve(fixturesDir, 'diffFlat'), 'utf-8');
 
   test('qwe', () => {
-    expect(genDiff(before, after, 'json')).toBe(expected);
+    expect(genDiff(before, after, 'json')).toEqual(result);
   });
 
   /*
