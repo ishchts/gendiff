@@ -15,6 +15,7 @@ const types = {
   added: 'added',
   changed: 'changed',
   removed: 'removed',
+  nested: 'nested',
 };
 
 const node = ({ name, beforeValue = null, afterValue = null, type, children }) => {
@@ -38,7 +39,7 @@ const ast = (file1, file2) => {
     const afterValue = file2[el];
 
     if (beforeValue instanceof Object && afterValue instanceof Object) {
-      return ast(beforeValue, afterValue);
+      return node({ name: el, type: 'nested', children: ast(beforeValue, afterValue) });
     }
     if (has(file1, el) && has(file2, el)) {
       if (beforeValue === afterValue) {
@@ -67,7 +68,11 @@ const renderAst = (nodes) => {
       return renderAst(node);
     }
 
-    const { type, name, beforeValue, afterValue } = node;
+    const { type, name, beforeValue, afterValue, children } = node;
+    if (type === 'nested') {
+      return `  ${name} ${['{', ...renderAst(children), '}'].join('\n')}`;
+    }
+
     if (type === 'unchanged') {
       return `    ${name}: ${beforeValue}`;
     };
@@ -96,9 +101,6 @@ export default (pathToFile1, pathToFile2) => {
   const file2 = parsers(formatFile2, readFile(pathToFile2));
 
   const buildAst = ast(file1, file2);
-  console.log('buildAst 222');
-  console.log(buildAst);
-  return null;
 
   return ['{', ...renderAst(buildAst), '}'].join('\n');
 };
