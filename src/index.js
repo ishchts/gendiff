@@ -12,14 +12,14 @@ const readFile = (filePath) => (
 );
 
 const depthStep = 1;
-const getSpaces = depth => '    '.repeat(depth);
+const getSpaces = (depth) => '    '.repeat(depth);
 
 const stringify = (value, depth) => {
   if (!isObject(value)) {
     return value;
   }
   return `{\n${Object.keys(value)
-    .map(key => `${getSpaces(depth + depthStep)}${key}: ${value[key]}`)
+    .map((key) => `${getSpaces(depth + depthStep)}${key}: ${value[key]}`)
     .join('\n')}\n${getSpaces(depth)}}`;
 };
 
@@ -31,9 +31,9 @@ export default (pathToFile1, pathToFile2) => {
   const file2 = parsers(formatFile2, readFile(pathToFile2));
 
   const ast = buildAst(file1, file2);
-  
+
   const render = (node, depth = 0) => {
-    const result = node.map(el => {
+    const result = node.map((el) => {
       const {
         name,
         type,
@@ -49,7 +49,7 @@ export default (pathToFile1, pathToFile2) => {
       if (type === 'updated') {
         return [
           `  ${getSpaces(depth)}+ ${name}: ${stringify(afterValue, depth + depthStep)}`,
-          `  ${getSpaces(depth)}- ${name}: ${stringify(beforeValue, depth + depthStep)}`
+          `  ${getSpaces(depth)}- ${name}: ${stringify(beforeValue, depth + depthStep)}`,
         ];
       }
 
@@ -64,10 +64,9 @@ export default (pathToFile1, pathToFile2) => {
       if (type === 'unchanged') {
         return `${getSpaces(depth + depthStep)}${name}: ${stringify(beforeValue, depth + depthStep)}`;
       }
-
     });
 
     return `{\n${flatten(result).join('\n')}\n${getSpaces(depth)}}`;
-  }
+  };
   return render(ast);
 };
