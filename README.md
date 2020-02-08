@@ -8,7 +8,24 @@
 
 # Asciinema
 
-[![asciicast](https://asciinema.org/a/ovoikYe0Q4RxwHWau0jkTPyZk.svg)](https://asciinema.org/a/ovoikYe0Q4RxwHWau0jkTPyZk)
+## Сравнение файлов (JSON)
 
-# Comparison of flat files (yaml)
-[![asciicast](https://asciinema.org/connect/7f3a87b8-1ac5-4a31-8cd4-9d83e0e1af69.svg)](https://asciinema.org/connect/7f3a87b8-1ac5-4a31-8cd4-9d83e0e1af69)
+[![asciicast](https://asciinema.org/a/0OI0B7TMlGGlIjzqBohS7KXBB.svg)](https://asciinema.org/a/0OI0B7TMlGGlIjzqBohS7KXBB)
+
+## Сравнение файлов (yaml)
+
+[![asciicast](https://asciinema.org/a/QV3SH1yFBSMrjNhYXNJAZkktW.svg)](https://asciinema.org/a/QV3SH1yFBSMrjNhYXNJAZkktW)
+
+## Сравнение файлов (ini)
+
+[![asciicast](https://asciinema.org/a/AAvDx7EnsUVPTqn8fpNvWXA0Z.svg)](https://asciinema.org/a/AAvDx7EnsUVPTqn8fpNvWXA0Z)
+
+## Плоский формат
+
+[![asciicast](https://asciinema.org/a/4TDoZt5NcEzEnXlRYL9QTkye3.svg)](https://asciinema.org/a/4TDoZt5NcEzEnXlRYL9QTkye3)
+
+## Вывод в json
+
+[![asciicast](https://asciinema.org/a/4581juIL8VcAW4mhh2zUSs1iV.svg)](https://asciinema.org/a/4581juIL8VcAW4mhh2zUSs1iV)
+
+

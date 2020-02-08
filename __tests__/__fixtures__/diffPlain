@@ -1,0 +1,10 @@
+Property setting2 was deleted
+Property setting3 was changed from true to [complex value]
+Property ops was added with value: vops
+Property follow was added with value: false
+Property setting4 was added with value: blah blah
+Property setting5 was added with value: [complex value]
+Property baz was changed from bas to bars
+Property nest was changed from [complex value] to str
+Property group2 was deleted
+Property group3 was added with value: [complex value]

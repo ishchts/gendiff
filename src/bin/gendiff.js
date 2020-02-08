@@ -7,7 +7,7 @@ program
   .arguments('<firstConfig> <secondConfig>')
   .version(version)
   .description(description)
-  .option('-f, --format [type]', 'Output format', 'json')
+  .option('-f, --format [type]', 'Output format')
   .action((firstConfig, secondConfig) => {
     console.log(genDiff(firstConfig, secondConfig, program.format));
   });
