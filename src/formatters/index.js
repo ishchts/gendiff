@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 import renderSimple from './renderSimple';
 import renderDefault from './renderDefault';
 import renderPlain from './renderPlain';
