@@ -17,20 +17,16 @@ beforeAll(() => {
 extNames.forEach((ext) => {
   const pathFile1 = `__test__/__fixtures__/before.${ext}`;
   const pathFile2 = `__test__/__fixtures__/after.${ext}`;
-  describe('test stylish', () => {
-    test(`diff stylish ${ext}`, () => {
+  describe('gendiff test', () => {
+    test(`${ext} extension test with stylish format`, () => {
       expect(gendiff(pathFile1, pathFile2, 'stylish')).toBe(resultStylish);
     });
-  });
 
-  describe('test plain', () => {
-    test(`diff stylish ${ext}`, () => {
+    test(`${ext} extension test with plain format`, () => {
       expect(gendiff(pathFile1, pathFile2, 'plain')).toBe(resultPlain);
     });
-  });
 
-  describe('test json', () => {
-    test(`diff stylish ${ext}`, () => {
+    test(`${ext} extension test with json format`, () => {
       expect(gendiff(pathFile1, pathFile2, 'json')).toBe(resultJson);
     });
   });
