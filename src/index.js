@@ -1,20 +1,23 @@
 import fs from 'fs';
 import path from 'path';
 import parsers from './parsers';
-import buildAst from './buildAst';
-import render from './formatters';
+import getBuildAst from './buildAst';
+import formaters from './formatters';
 
-const getFile = (filePath) => (
-  fs.readFileSync(path.resolve(filePath), 'utf-8')
-);
+const getCorrectPath = (filePath) => path.resolve(filePath);
 
-export default (pathToFile1, pathToFile2, format = 'default') => {
-  const formatFile1 = path.extname(pathToFile1);
-  const formatFile2 = path.extname(pathToFile2);
+const getExtName = (filePath) => path.extname(filePath).slice(1);
 
-  const file1 = parsers(formatFile1, getFile(pathToFile1));
-  const file2 = parsers(formatFile2, getFile(pathToFile2));
+const gendiff = (path1, path2, format) => {
+  const file1 = fs.readFileSync(getCorrectPath(path1), 'utf-8');
+  const file2 = fs.readFileSync(getCorrectPath(path2), 'utf-8');
 
-  const ast = buildAst(file1, file2);
-  return render(ast, format);
+  const parseFile1 = parsers(getExtName(path1), file1);
+  const parseFile2 = parsers(getExtName(path2), file2);
+
+  const buildAst = getBuildAst(parseFile1, parseFile2);
+  const renderNodes = formaters(format, buildAst);
+  return renderNodes;
 };
+
+export default gendiff;

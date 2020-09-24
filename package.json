@@ -2,35 +2,42 @@
   "name": "project-lvl2",
   "version": "1.0.0",
   "description": "Compares two configuration files and shows a difference.",
-  "main": "package.json",
+  "main": "src/index.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "commander": "4.1.0",
-    "ini": "^1.3.5",
-    "js-yaml": "^3.13.1",
-    "lodash": "^4.17.15"
+    "commander": "6.1.0",
+    "ini": "1.3.5",
+    "js-yaml": "3.14.0",
+    "lodash": "4.17.20"
   },
   "scripts": {
-    "test": "jest",
+    "test": "npx jest",
+    "testw": "npx -n jest --watch",
     "prepublishOnly": "npm run build",
-    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline"
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "localtest": "npx babel-node ./src/bin/gendiff.js ./__test__/__fixtures__/before.ini ./__test__/__fixtures__/after.ini",
+    "localtest2": "npx babel-node ./src/bin/gendiff.js ./__test__/__fixtures__/before.json ./__test__/__fixtures__/after.json",
+    "plaintest": "npx babel-node ./src/bin/gendiff.js -f plain ./__test__/__fixtures__/before.json ./__test__/__fixtures__/after.json",
+    "jsontest": "npx babel-node ./src/bin/gendiff.js -f json ./__test__/__fixtures__/before.json ./__test__/__fixtures__/after.json"
   },
   "bin": {
-    "gendiff": "dist/bin/gendiff.js"
+    "gendiff": "src/bin/gendiff.js"
   },
   "devDependencies": {
-    "@babel/cli": "7.8.0",
-    "@babel/core": "7.8.0",
-    "@babel/node": "7.8.0",
-    "@babel/plugin-proposal-pipeline-operator": "7.8.0",
-    "@babel/preset-env": "7.8.0",
-    "babel-eslint": "10.0.3",
-    "eslint": "6.8.0",
-    "eslint-config-airbnb-base": "14.0.0",
-    "eslint-plugin-babel": "5.3.0",
-    "eslint-plugin-import": "2.20.0",
-    "jest": "24.9.0"
+    "@babel/cli": "7.11.6",
+    "@babel/core": "7.11.6",
+    "@babel/node": "7.10.5",
+    "@babel/plugin-proposal-pipeline-operator": "7.10.5",
+    "@babel/preset-env": "7.11.5",
+    "babel-eslint": "10.1.0",
+    "eslint": "7.9.0",
+    "eslint-config-airbnb-base": "14.2.0",
+    "eslint-plugin-babel": "5.3.1",
+    "eslint-plugin-import": "2.22.0",
+    "eslint-plugin-jest": "24.0.1",
+    "jest": "26.4.2",
+    "jest-cli": "26.4.2"
   }
 }

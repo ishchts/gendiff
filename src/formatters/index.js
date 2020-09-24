@@ -1,14 +1,11 @@
-import renderSimple from './renderSimple';
-import renderDefault from './renderDefault';
+import renderStylish from './renderStylish';
 import renderPlain from './renderPlain';
+import renderJson from './renderJson';
 
-const getFormat = (format) => {
-  const node = {
-    default: renderDefault,
-    plain: renderPlain,
-    json: renderSimple,
-  };
-  return node[format];
+const actions = {
+  stylish: renderStylish,
+  plain: renderPlain,
+  json: renderJson,
 };
 
-export default (ast, format) => getFormat(format)(ast);
+export default (format, data) => actions[format](data);

@@ -1,6 +1,20 @@
-import { has, union } from 'lodash';
+import {
+  uniq,
+  isObject,
+  has,
+  get,
+} from 'lodash';
+import { DIFF_TYPES } from './constants';
 
-const node = (name, type, beforeValue, afterValue, children = []) => ({
+/**
+ * Возвращает объект с описанием свойств объекта
+ * @param {string} name
+ * @param {string} type
+ * @param {*} beforeValue
+ * @param {*} afterValue
+ * @param {Array} children
+ */
+const makeNode = (name, type, beforeValue, afterValue, children) => ({
   name,
   type,
   beforeValue,
@@ -8,62 +22,32 @@ const node = (name, type, beforeValue, afterValue, children = []) => ({
   children,
 });
 
-const buildAst = (data1, data2) => {
-  const keys = union(Object.keys(data1), Object.keys(data2));
+const getBuildAst = (beforeFile, afterFile) => {
+  const commonKeys = uniq([...Object.keys(beforeFile), ...Object.keys(afterFile)]);
+  return commonKeys.sort().map((name) => {
+    const beforeValue = beforeFile[name];
+    const afterValue = afterFile[name];
 
-  return keys.map((el) => {
-    if (data1[el] instanceof Object && data2[el] instanceof Object) {
-      return node(
-        el,
-        'nested',
-        null,
-        '',
-        buildAst(data1[el], data2[el]),
-      );
+    if (
+      (has(beforeFile, name) && has(afterFile, name))
+      && (isObject(beforeValue) && isObject(afterValue))) {
+      return makeNode(name, DIFF_TYPES.NESTED, null, null, getBuildAst(beforeValue, afterValue));
     }
 
-    if (!has(data1, el)) {
-      return node(
-        el,
-        'added',
-        '',
-        data2[el],
-        [],
-      );
+    if (has(beforeFile, name) && !has(afterFile, name)) {
+      return makeNode(name, DIFF_TYPES.REMOVED, beforeValue, afterValue, null);
     }
 
-    if (!has(data2, el)) {
-      return node(
-        el,
-        'removed',
-        data1[el],
-        '',
-        [],
-      );
+    if (!has(beforeFile, name) && has(afterFile, name)) {
+      return makeNode(name, DIFF_TYPES.ADDED, beforeValue, afterValue, null);
     }
 
-    if (data1[el] === data2[el]) {
-      return node(
-        el,
-        'unchanged',
-        data1[el],
-        '',
-        [],
-      );
+    if (get(beforeFile, name) === get(afterFile, name)) {
+      return makeNode(name, DIFF_TYPES.UNCHANGED, beforeValue, afterValue, null);
     }
 
-    if (data1[el] !== data2[el]) {
-      return node(
-        el,
-        'updated',
-        data1[el],
-        data2[el],
-        [],
-      );
-    }
-
-    return new Error('Unknown type');
+    return makeNode(name, DIFF_TYPES.UPDATED, beforeValue, afterValue, null);
   });
 };
 
-export default buildAst;
+export default getBuildAst;
