@@ -16,14 +16,10 @@
     "test": "npx jest",
     "testw": "npx -n jest --watch",
     "prepublishOnly": "npm run build",
-    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
-    "localtest": "npx babel-node ./src/bin/gendiff.js ./__test__/__fixtures__/before.ini ./__test__/__fixtures__/after.ini",
-    "localtest2": "npx babel-node ./src/bin/gendiff.js ./__test__/__fixtures__/before.json ./__test__/__fixtures__/after.json",
-    "plaintest": "npx babel-node ./src/bin/gendiff.js -f plain ./__test__/__fixtures__/before.json ./__test__/__fixtures__/after.json",
-    "jsontest": "npx babel-node ./src/bin/gendiff.js -f json ./__test__/__fixtures__/before.json ./__test__/__fixtures__/after.json"
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline"
   },
   "bin": {
-    "gendiff": "src/bin/gendiff.js"
+    "gendiff": "dist/bin/gendiff.js"
   },
   "devDependencies": {
     "@babel/cli": "7.11.6",
