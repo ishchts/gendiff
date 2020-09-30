@@ -1,3 +1,4 @@
+import os from 'os';
 import { has, isObject } from 'lodash';
 import { DIFF_TYPES } from '../constants';
 
@@ -30,7 +31,7 @@ const renderPlain = (nodes, ancestors = '') => {
     throw Error(`Unknow type ${type}`);
   });
 
-  return result.filter((el) => el.length > 0).join('\n');
+  return result.filter((el) => el.length > 0).join(os.EOL);
 };
 
 export default renderPlain;

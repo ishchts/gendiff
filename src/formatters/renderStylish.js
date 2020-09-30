@@ -1,3 +1,4 @@
+import os from 'os';
 import { isObject } from 'lodash';
 import { DIFF_TYPES } from '../constants';
 
@@ -10,7 +11,7 @@ const renderValue = (value, depth) => {
 
   const mapValues = Object.keys(value).map((el) => `${space.repeat(depth)}${space}${el}: ${renderValue(value[el], depth + 1)}`);
 
-  return `{\n${mapValues.join('\n')}\n${space.repeat(depth)}}`;
+  return `{${os.EOL}${mapValues.join(os.EOL)}${os.EOL}${space.repeat(depth)}}`;
 };
 
 const renderStylish = (diff) => {
@@ -26,13 +27,13 @@ const renderStylish = (diff) => {
         return [
           `${space.repeat(depth)}  - ${el.name}: ${renderValue(el.beforeValue, depth + 1)}`,
           `${space.repeat(depth)}  + ${el.name}: ${renderValue(el.afterValue, depth + 1)}`,
-        ].join('\n');
+        ].join(os.EOL);
       }
       case DIFF_TYPES.UNCHANGED: {
         return `${space.repeat(depth)}${space}${el.name}: ${renderValue(el.afterValue, depth + 1)}`;
       }
       case DIFF_TYPES.NESTED: {
-        return `${space.repeat(depth)}${space}${el.name}: {\n${iter(el.children, depth + 1).join('\n')}\n${space.repeat(depth)}${space}}`;
+        return `${space.repeat(depth)}${space}${el.name}: {${os.EOL}${iter(el.children, depth + 1).join(os.EOL)}${os.EOL}${space.repeat(depth)}${space}}`;
       }
       default: {
         throw Error('unknow type');
@@ -40,7 +41,7 @@ const renderStylish = (diff) => {
     }
   });
 
-  return `{\n${iter(diff).join('\n')}\n}`;
+  return `{${os.EOL}${iter(diff).join(os.EOL)}${os.EOL}}`;
 };
 
 export default renderStylish;
