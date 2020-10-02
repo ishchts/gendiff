@@ -28,22 +28,20 @@ const getBuildAst = (beforeFile, afterFile) => {
     const beforeValue = beforeFile[name];
     const afterValue = afterFile[name];
 
-    if (
-      (has(beforeFile, name) && has(afterFile, name))
-      && (isObject(beforeValue) && isObject(afterValue))) {
-      return makeNode(name, DIFF_TYPES.NESTED, null, null, getBuildAst(beforeValue, afterValue));
-    }
-
-    if (has(beforeFile, name) && !has(afterFile, name)) {
+    if (!has(afterFile, name)) {
       return makeNode(name, DIFF_TYPES.REMOVED, beforeValue, afterValue, null);
     }
 
-    if (!has(beforeFile, name) && has(afterFile, name)) {
+    if (!has(beforeFile, name)) {
       return makeNode(name, DIFF_TYPES.ADDED, beforeValue, afterValue, null);
     }
 
     if (get(beforeFile, name) === get(afterFile, name)) {
       return makeNode(name, DIFF_TYPES.UNCHANGED, beforeValue, afterValue, null);
+    }
+
+    if (isObject(beforeValue) && isObject(afterValue)) {
+      return makeNode(name, DIFF_TYPES.NESTED, null, null, getBuildAst(beforeValue, afterValue));
     }
 
     return makeNode(name, DIFF_TYPES.UPDATED, beforeValue, afterValue, null);

@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import gendiff from '../src';
 
+const getFixturePath = (filename) => path.join(__dirname, '.', '__fixtures__', filename);
+
 const extNames = ['json', 'yml', 'ini'];
 
 let resultStylish;
@@ -15,8 +17,9 @@ beforeAll(() => {
 });
 
 extNames.forEach((ext) => {
-  const pathFile1 = `__test__/__fixtures__/before.${ext}`;
-  const pathFile2 = `__test__/__fixtures__/after.${ext}`;
+  const pathFile1 = getFixturePath(`before.${ext}`);
+  const pathFile2 = getFixturePath(`after.${ext}`);
+
   describe('gendiff test', () => {
     test(`${ext} extension test with stylish format`, () => {
       expect(gendiff(pathFile1, pathFile2, 'stylish')).toBe(resultStylish);
@@ -31,3 +34,4 @@ extNames.forEach((ext) => {
     });
   });
 });
+

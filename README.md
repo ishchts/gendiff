@@ -1,6 +1,3 @@
-Можно сократить дублирование путей
-Проверки сделаны сложно. Если построить логику от простого, то все значительно сократится.
-
 # Code Climate
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/f68f2d88dad20abe4fed/maintainability)](https://codeclimate.com/github/Il1ya1/backend-project-lvl2/maintainability)
