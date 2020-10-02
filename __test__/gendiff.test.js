@@ -11,9 +11,9 @@ let resultPlain;
 let resultJson;
 
 beforeAll(() => {
-  resultStylish = fs.readFileSync(path.join('__test__/__fixtures__/stylish'), 'utf-8');
-  resultPlain = fs.readFileSync(path.join('__test__/__fixtures__/plain'), 'utf-8');
-  resultJson = fs.readFileSync(path.join('__test__/__fixtures__/json'), 'utf-8');
+  resultStylish = fs.readFileSync(getFixturePath('stylish'), 'utf-8');
+  resultPlain = fs.readFileSync(getFixturePath('plain'), 'utf-8');
+  resultJson = fs.readFileSync(getFixturePath('json'), 'utf-8');
 });
 
 extNames.forEach((ext) => {
