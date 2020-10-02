@@ -34,4 +34,3 @@ extNames.forEach((ext) => {
     });
   });
 });
-
