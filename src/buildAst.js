@@ -1,8 +1,8 @@
 import {
-  uniq,
   isObject,
   has,
   get,
+  keys,
 } from 'lodash';
 import { DIFF_TYPES } from './constants';
 
@@ -23,7 +23,7 @@ const makeNode = (name, type, beforeValue, afterValue, children) => ({
 });
 
 const getBuildAst = (beforeFile, afterFile) => {
-  const commonKeys = uniq([...Object.keys(beforeFile), ...Object.keys(afterFile)]);
+  const commonKeys = keys({ ...beforeFile, ...afterFile });
   return commonKeys.sort().map((name) => {
     const beforeValue = beforeFile[name];
     const afterValue = afterFile[name];

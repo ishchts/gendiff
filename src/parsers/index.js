@@ -7,9 +7,9 @@ const parsers = {
   ini: parseIni,
 };
 
-export default (extName, fileData) => {
+export default (extName, rawData) => {
   if (parsers[extName]) {
-    return parsers[extName](fileData);
+    return parsers[extName](rawData);
   }
 
   throw Error(`unknow type ${extName}`);

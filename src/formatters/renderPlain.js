@@ -1,4 +1,3 @@
-import os from 'os';
 import { has, isObject } from 'lodash';
 import { DIFF_TYPES } from '../constants';
 
@@ -21,17 +20,17 @@ const dispatcher = {
   [DIFF_TYPES.UNCHANGED]: () => [],
 };
 
-const renderPlain = (nodes, ancestors = '') => {
-  const result = nodes.map((obj) => {
+const renderPlain = (nodes, ancestor = '') => {
+  const result = nodes.flatMap((obj) => {
     const { type, name } = obj;
-    const newName = ancestors.length === 0 ? `${name}` : `${ancestors}.${name}`;
+    const newName = ancestor.length === 0 ? `${name}` : `${ancestor}.${name}`;
     if (has(dispatcher, type)) {
       return dispatcher[type](obj, newName, renderPlain);
     }
     throw Error(`Unknow type ${type}`);
   });
 
-  return result.filter((el) => el.length > 0).join(os.EOL);
+  return result.join('\n');
 };
 
 export default renderPlain;
