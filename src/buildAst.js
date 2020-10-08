@@ -3,6 +3,7 @@ import {
   has,
   get,
   keys,
+  union,
 } from 'lodash';
 import { DIFF_TYPES } from './constants';
 
@@ -23,7 +24,7 @@ const makeNode = (name, type, beforeValue, afterValue, children) => ({
 });
 
 const getBuildAst = (beforeFile, afterFile) => {
-  const commonKeys = keys({ ...beforeFile, ...afterFile });
+  const commonKeys = union(keys(beforeFile), keys(afterFile));
   return commonKeys.sort().map((name) => {
     const beforeValue = beforeFile[name];
     const afterValue = afterFile[name];
