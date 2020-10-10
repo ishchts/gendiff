@@ -26,8 +26,8 @@ const makeNode = (name, type, beforeValue, afterValue, children) => ({
 const getBuildAst = (object1, object2) => {
   const commonKeys = union(keys(object1), keys(object2));
   return commonKeys.sort().map((name) => {
-    const beforeValue = beforeFile[name];
-    const afterValue = afterFile[name];
+    const beforeValue = object1[name];
+    const afterValue = object2[name];
 
     if (!has(afterFile, name)) {
       return makeNode(name, DIFF_TYPES.REMOVED, beforeValue, afterValue, null);
