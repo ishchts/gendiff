@@ -8,7 +8,7 @@ import {
 import { DIFF_TYPES } from './constants';
 
 /**
- * Возвращает объект с описанием свойств объекта
+ * Возвращает объект с описанием свойств
  * @param {string} name
  * @param {string} type
  * @param {*} beforeValue
@@ -23,8 +23,8 @@ const makeNode = (name, type, beforeValue, afterValue, children) => ({
   children,
 });
 
-const getBuildAst = (beforeFile, afterFile) => {
-  const commonKeys = union(keys(beforeFile), keys(afterFile));
+const getBuildAst = (object1, object2) => {
+  const commonKeys = union(keys(object1), keys(object2));
   return commonKeys.sort().map((name) => {
     const beforeValue = beforeFile[name];
     const afterValue = afterFile[name];
