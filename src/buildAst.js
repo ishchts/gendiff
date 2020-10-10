@@ -29,15 +29,15 @@ const getBuildAst = (object1, object2) => {
     const beforeValue = object1[name];
     const afterValue = object2[name];
 
-    if (!has(afterFile, name)) {
+    if (!has(object2, name)) {
       return makeNode(name, DIFF_TYPES.REMOVED, beforeValue, afterValue, null);
     }
 
-    if (!has(beforeFile, name)) {
+    if (!has(object1, name)) {
       return makeNode(name, DIFF_TYPES.ADDED, beforeValue, afterValue, null);
     }
 
-    if (get(beforeFile, name) === get(afterFile, name)) {
+    if (get(object1, name) === get(object2, name)) {
       return makeNode(name, DIFF_TYPES.UNCHANGED, beforeValue, afterValue, null);
     }
 
