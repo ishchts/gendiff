@@ -2,6 +2,8 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/f68f2d88dad20abe4fed/maintainability)](https://codeclimate.com/github/Il1ya1/backend-project-lvl2/maintainability)
 
+[![Test Coverage](https://api.codeclimate.com/v1/badges/529dc25ae30913935e58/test_coverage)](https://codeclimate.com/github/ishchts/gendiff/test_coverage)
+
 # Travis CI
 
 [![Build Status](https://travis-ci.com/Il1ya1/backend-project-lvl2.svg?branch=master)](https://travis-ci.com/Il1ya1/backend-project-lvl2)
