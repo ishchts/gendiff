@@ -16,7 +16,7 @@ publish:
 test:
 	npm run test 
 
-test-covegare:
+test-coverage:
 	npx jest --coverage
 
 test-watch:

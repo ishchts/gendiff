@@ -4,3 +4,4 @@ dist
 .tern-port
 .idea
 .vscode/
+/coverage
